@@ -1009,64 +1009,237 @@ import random
 
 
 
-##################################################################
-f = open('D:\毕设\接收\data\my_upmat2.txt','r')
-alllines = f.readlines()
-f.close()
-upmat = []
-for eachline in alllines:
-    upmat.append(eachline.split(' '))
-for i in range(len(upmat)):
-    for j in range(len(upmat[0])-1):
-        upmat[i][j] = float(upmat[i][j])
-for i in range(len(upmat)):
-    upmat[i] = upmat[i][:-1]
-
-
-f = open('D:\毕设\接收\data\my_dismat2.txt','r')
-alllines = f.readlines()
-f.close()
-dismat = []
-for eachline in alllines:
-    dismat.append(eachline.split(' '))
-for i in range(len(dismat)):
-    for j in range(len(dismat[0])-1):
-        dismat[i][j] = float(dismat[i][j])
-for i in range(len(dismat)):
-    dismat[i] = dismat[i][:-1]
-
-#their method
-# [result, centers] = clusters.cluster_process(300, dismat, upmat, 10)
+# ##################################################################
+# f = open('D:\毕设\接收\data\my_upmat2.txt','r')
+# alllines = f.readlines()
+# f.close()
+# upmat = []
+# for eachline in alllines:
+#     upmat.append(eachline.split(' '))
+# for i in range(len(upmat)):
+#     for j in range(len(upmat[0])-1):
+#         upmat[i][j] = float(upmat[i][j])
+# for i in range(len(upmat)):
+#     upmat[i] = upmat[i][:-1]
+#
+#
+# f = open('D:\毕设\接收\data\my_dismat2.txt','r')
+# alllines = f.readlines()
+# f.close()
+# dismat = []
+# for eachline in alllines:
+#     dismat.append(eachline.split(' '))
+# for i in range(len(dismat)):
+#     for j in range(len(dismat[0])-1):
+#         dismat[i][j] = float(dismat[i][j])
+# for i in range(len(dismat)):
+#     dismat[i] = dismat[i][:-1]
+#
+# #their method
+# # [result, centers] = clusters.cluster_process(300, dismat, upmat, 10)
+# # # new_pcmat = clusters.get_new_pcmat(result, len(upmat[0]))
+# # new_pcmat = clusters.justbuildpcmat(centers, len(upmat[0]), dismat)
+# # new_upmat = clusters.topn(upmat, len(result), result, new_pcmat)
+#
+# # #my method
+# # result = clusters.desprade_cluster_min(dismat, 400, 4)
+# # new_pcmat = clusters.get_new_pcmat(result, len(upmat[0]))
+# # new_upmat = clusters.topn(upmat, len(result), result, new_pcmat)
+# # print("len(result):", len(result));
+#
+#
+#
+#
+# ## 多维
+# # new_pcmat = clusters.getMulClu(dismat, 400, 4)
+# # new_upmat = clusters.multopn(upmat,new_pcmat)
+#
+#
+# # new_upmat = clusters.topn(upmat, 222, [], new_pcmat)
+#
+# #SVD
+# [result, centers] = clusters.cluster_process(200, dismat, upmat, 10)
 # # new_pcmat = clusters.get_new_pcmat(result, len(upmat[0]))
 # new_pcmat = clusters.justbuildpcmat(centers, len(upmat[0]), dismat)
-# new_upmat = clusters.topn(upmat, len(result), result, new_pcmat)
+# UPrec = clusters.userSVDplusplus(upmat, len(result), new_pcmat)
+#
+#
+# # UPrec = clusters.get_UPrec(new_upmat,new_pcmat)
+#
+# f = open('D:\毕设\接收\data\my_UPrec2.txt','w')
+# for i in range(len(UPrec)):
+#     # print('len(check_result[i]):',len(check_result[i]))
+#     for j in range(len(UPrec[0])):
+#         f.write(str(UPrec[i][j]))
+#         f.write(' ')
+#     f.write('\n')
+# f.close()
+#
+# # [PRE, RECALL] = clusters.uptest(UPrec, trainset, testset)
+# # x = [i for i in range(1, 101)]
+# # y = PRE[0:100]
+# # z = RECALL[0:100]
+# # pl.plot(x,y,'ro--')
+# # pl.plot(x,z,'go--')
+# # pl.show()
+# print('finised')
 
-# #my method
-# result = clusters.desprade_cluster_min(dismat, 400, 4)
-# new_pcmat = clusters.get_new_pcmat(result, len(upmat[0]))
-# new_upmat = clusters.topn(upmat, len(result), result, new_pcmat)
-# print("len(result):", len(result));
 
 
 
 
-## 多维
-# new_pcmat = clusters.getMulClu(dismat, 400, 4)
-# new_upmat = clusters.multopn(upmat,new_pcmat)
 
 
-# new_upmat = clusters.topn(upmat, 222, [], new_pcmat)
 
-#SVD
-[result, centers] = clusters.cluster_process(200, dismat, upmat, 10)
-# new_pcmat = clusters.get_new_pcmat(result, len(upmat[0]))
-new_pcmat = clusters.justbuildpcmat(centers, len(upmat[0]), dismat)
-UPrec = clusters.userSVDplusplus(upmat, len(result), new_pcmat)
+# f = open('D:\毕设\接收\data\my_upmat1.txt','r')
+# alllines = f.readlines()
+# f.close()
+# upmat = []
+# for eachline in alllines:
+#     upmat.append(eachline.split(' '))
+# for i in range(len(upmat)):
+#     for j in range(len(upmat[0])-1):
+#         upmat[i][j] = float(upmat[i][j])
+# for i in range(len(upmat)):
+#     upmat[i] = upmat[i][:-1]
+#
+#
+# f = open('D:\毕设\接收\data\item.txt','w')
+# for i in range(len(upmat)):
+#     # print('len(check_result[i]):',len(check_result[i]))
+#     for j in range(len(upmat[0])):
+#         if upmat[i][j] == 0:
+#             continue
+#         f.write(str(i))
+#         f.write(',')
+#         f.write(str(j))
+#         f.write(',')
+#         f.write(str(upmat[i][j]))
+#         f.write('\n')
+# f.close()
+#
+# print('finised')
 
 
-# UPrec = clusters.get_UPrec(new_upmat,new_pcmat)
+# filepath = 'D:\毕设\接收\data\综合采样1.txt'
+# clusters.getTest(filepath)
+# print('finised')
 
-f = open('D:\毕设\接收\data\my_UPrec2.txt','w')
+
+
+# #####################获取所有的数据
+# filepath = 'D:\毕设\接收\data\综合采样1.txt'
+# clusters.getAllData(filepath)
+# print('finised')
+
+
+
+
+
+##################################################################MovieLens data
+filepath = 'D:\毕设\接收\data\ml.txt'
+userNum = 943
+proNum = 1682
+upmat = [[0]*proNum for i in range(userNum)]
+upmat_test = [[0]*proNum for i in range(userNum)]
+f = open(filepath,'r')
+alllines = f.readlines()
+f.close()
+for eachline in alllines:
+    data = eachline.split('\t')
+    # print('ttt = ', data)
+    if random.randint(1,10) > 2:
+        upmat[int(data[0])-1][int(data[1])-1] = int(data[2])
+    else:
+        upmat_test[int(data[0])-1][int(data[1])-1] = int(data[2])
+dismat = clusters.get_dismat(upmat)
+f = open('D:\毕设\接收\data\my_dismatML_2.txt','w')
+for i in range(len(dismat)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    for j in range(len(dismat[0])):
+        f.write(str(dismat[i][j]))
+        f.write(' ')
+    f.write('\n')
+f.close()
+# f = open('D:\毕设\接收\data\my_dismat1.txt','r')
+# alllines = f.readlines()
+# f.close()
+# dismat = []
+# for eachline in alllines:
+#     dismat.append(eachline.split(' '))
+# for i in range(len(dismat)):
+#     for j in range(len(dismat[0])-1):
+#         dismat[i][j] = float(dismat[i][j])
+# for i in range(len(dismat)):
+#     dismat[i] = dismat[i][:-1]
+
+
+# [result, centers] = clusters.cluster_process(300, dismat, upmat, 10)
+# result = clusters.adjust_centers_clusters(dismat, upmat, 200)
+# result = clusters.desprade_cluster(dismat, 300)
+# result = clusters.desprade_cluster2(dismat, 300)
+# result = clusters.desprade_cluster3(dismat, 300)
+result = clusters.desprade_cluster_min(dismat, 400, 4)
+# [result, centers] = clusters. multi_centers_max_min_cluster(dismat)
+# result = clusters.my_maxminclustart(dismat, 50)
+
+new_pcmat = clusters.get_new_pcmat(result, len(upmat[0]))
+new_upmat = clusters.topn(upmat, len(result), result, new_pcmat)
+# new_pcmat = clusters.get_pcmat(centers, len(upmat[0]), dismat)
+# new_upmat = clusters.get_ucmat(upmat, new_pcmat)
+
+f = open('D:\毕设\接收\data\my_upmatML_2.txt','w')
+for i in range(len(upmat)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    for j in range(len(upmat[0])):
+        f.write(str(upmat[i][j]))
+        f.write(' ')
+    f.write('\n')
+f.close()
+
+trainset = clusters.get_set(upmat)
+
+f = open('D:\毕设\接收\data\my_trainsetML_2.txt','w')
+for i in range(len(trainset)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    for j in range(len(trainset[0])):
+        f.write(str(trainset[i][j]))
+        f.write(' ')
+    f.write('\n')
+f.close()
+f = open('D:\毕设\接收\data\my_upmat_testML_2.txt','w')
+for i in range(len(upmat_test)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    for j in range(len(upmat_test[0])):
+        f.write(str(upmat_test[i][j]))
+        f.write(' ')
+    f.write('\n')
+f.close()
+
+testset = clusters.get_set(upmat_test)
+
+f = open('D:\毕设\接收\data\my_testsetML_2.txt','w')
+for i in range(len(testset)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    for j in range(len(testset[0])):
+        f.write(str(testset[i][j]))
+        f.write(' ')
+    f.write('\n')
+f.close()
+
+f = open('D:\毕设\接收\data\my_new_pcmatML_2.txt','w')
+for i in range(len(new_pcmat)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    for j in range(len(new_pcmat[0])):
+        f.write(str(new_pcmat[i][j]))
+        f.write(' ')
+    f.write('\n')
+f.close()
+
+
+UPrec = clusters.get_UPrec(new_upmat,new_pcmat)
+
+f = open('D:\毕设\接收\data\my_UPrecML_2.txt','w')
 for i in range(len(UPrec)):
     # print('len(check_result[i]):',len(check_result[i]))
     for j in range(len(UPrec[0])):
@@ -1075,11 +1248,29 @@ for i in range(len(UPrec)):
     f.write('\n')
 f.close()
 
-# [PRE, RECALL] = clusters.uptest(UPrec, trainset, testset)
-# x = [i for i in range(1, 101)]
-# y = PRE[0:100]
-# z = RECALL[0:100]
-# pl.plot(x,y,'ro--')
-# pl.plot(x,z,'go--')
-# pl.show()
+[PRE, RECALL] = clusters.uptest(UPrec, trainset, testset)
+x = [i for i in range(1, 101)]
+y = PRE[0:100]
+z = RECALL[0:100]
+pl.plot(x,y,'ro--')
+pl.plot(x,z,'go--')
+pl.show()
+f = open('D:\毕设\接收\data\my_precisionML_2.txt','w')
+for i in range(len(y)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    f.write(str(i+1))
+    f.write(',')
+    f.write(str(y[i]))
+    f.write('\n')
+f.close()
+
+f = open('D:\毕设\接收\data\my_recallML_2.txt','w')
+for i in range(len(z)):
+    # print('len(check_result[i]):',len(check_result[i]))
+    f.write(str(i+1))
+    f.write(',')
+    f.write(str(z[i]))
+    f.write('\n')
+f.close()
+
 print('finised')

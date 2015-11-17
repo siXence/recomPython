@@ -2219,3 +2219,127 @@ def userSVDplusplus(upmat, factorNum, qi, learnRate = 0.003, regularization = 0.
             outMatrix[uid][iid] = PredictScore(averageScore, bu[uid], bi[iid], pu[uid], qi[iid])
     print("model generation over")
     return outMatrix
+
+
+
+def getTest(filepath):
+    '''输入为原始采样数据，用户和节目的矩阵经过了修正，没有经过修正的矩阵,数据的预处理只要调用者一个函数就可以，整合了预处理的函数。
+    输出为用户和节目矩阵
+    '''
+    print('start pre_process...')
+    original_data = get_orginal_sample(filepath)
+    proid2seq = proID2seq(original_data)
+    filepath1 =  'D:\毕设\接收\data\list.txt'
+    saveProSeq(proid2seq, filepath1)
+    # [upmat,original_data, upmat_test] = get_upmat(original_data, proid2seq)
+
+
+    leng  = len(original_data)
+    upmat = [[0]*len(proid2seq) for i in range(4000)]
+    for i in range(leng):
+        original_data[i][1] = proid2seq[original_data[i][1]]
+        upmat[original_data[i][0]-1][original_data[i][1]] = original_data[i][2]
+
+    f = open('D:\毕设\接收\data\my_upmat_test1.txt','r')
+    alllines = f.readlines()
+    f.close()
+    testset = []
+    for eachline in alllines:
+        testset.append(eachline.split(' '))
+    for i in range(len(testset)):
+        for j in range(len(testset[0])-1):
+            testset[i][j] = float(testset[i][j])
+    for i in range(len(testset)):
+        testset[i] = testset[i][:-1]
+
+    upmat = np.asarray(upmat)
+    testset = np.asarray(testset)
+    testdata = upmat*testset
+    testdata = testdata.tolist()
+
+    cnt = [0 for i in range(len(testdata))]
+    record = [[] for i in range(len(testdata))]
+    for i in range(len(testdata)):
+        for j in range(len(testdata[i])):
+            if testdata[i][j] != 0:
+                cnt[i] = cnt[i] + 1
+                # if testdata[i][j] > 0.4:
+                #     record[i].append
+                record[i].append(j)
+
+    f = open('D:\毕设\接收\data\my_cntnum1.txt','w')
+    for i in range(len(cnt)):
+        f.write(str(cnt[i]))
+        f.write('\n')
+    f.close()
+
+    f = open('D:\毕设\接收\data\my_cntrecord1.txt','w')
+    for i in range(len(record)):
+        # print('len(check_result[i]):',len(check_result[i]))
+        for j in range(len(record[i])):
+            f.write(str(record[i][j]))
+            f.write(' ')
+        f.write('\n')
+    f.close()
+
+
+
+def getAllData(filepath):
+    '''输入为原始采样数据，用户和节目的矩阵经过了修正，没有经过修正的矩阵,数据的预处理只要调用者一个函数就可以，整合了预处理的函数。
+    输出为用户和节目矩阵
+    '''
+    print('start pre_process...')
+    original_data = get_orginal_sample(filepath)
+    proid2seq = proID2seq(original_data)
+    filepath1 =  'D:\毕设\接收\data\list.txt'
+    saveProSeq(proid2seq, filepath1)
+    leng  = len(original_data)
+    upmat = [[0]*len(proid2seq) for i in range(4000)]
+    for i in range(leng):
+        original_data[i][1] = proid2seq[original_data[i][1]]
+        upmat[original_data[i][0]-1][original_data[i][1]] = original_data[i][2]
+    #进一步处理，去除大于1.5的时长比，这是属于错误数据，并且做tan3映射,可以参考matlab程序cleandata.m
+    m = len(upmat)
+    n = len(upmat[0])
+    print('m:',m)
+    print('n:',n)
+    for i in range(m):
+        for j in range(n):
+            # if upmat[i][j] > 1.5 or upmat[i][j] == 0:
+            #     upmat[i][j] = 0.5
+            # elif upmat[i][j] > 1:
+            #     upmat[i][j] = 1
+            # upmat[i][j] = math.pow(math.tan(upmat[i][j]*(math.pi/2)-math.pi/4),3)
+
+            if upmat[i][j] > 1:
+                upmat[i][j] = 1
+
+            upmat[i][j] *= 5
+
+            # if upmat[i][j] < 0.1:
+            #     upmat[i][j] = 0
+            # elif upmat[i][j] >= 0.1 and upmat[i][j] < 0.3:
+            #     upmat[i][j] = 1
+            # elif upmat[i][j] >= 0.3 and upmat[i][j] < 0.5:
+            #     upmat[i][j] = 2
+            # elif upmat[i][j] >= 0.5 and upmat[i][j] < 0.7:
+            #     upmat[i][j] = 3
+            # elif upmat[i][j] >= 0.7 and upmat[i][j] < 0.9:
+            #     upmat[i][j] = 4
+            # else :
+            #     upmat[i][j] = 5
+
+            # upmat[i][j] = math.pow(math.tan(upmat[i][j]*math.pi/2-math.pi/4),1)
+    f = open('D:\毕设\接收\data\itemAll.txt','w')
+    for i in range(len(upmat)):
+        # print('len(check_result[i]):',len(check_result[i]))
+        for j in range(len(upmat[0])):
+            if upmat[i][j] == 0:
+                continue
+            f.write(str(i))
+            f.write(',')
+            f.write(str(j))
+            f.write(',')
+            f.write(str(upmat[i][j]))
+            f.write('\n')
+    f.close()
